@@ -107,3 +107,16 @@
     padding-left: 10px; 
   }
 }
+
+div.homePage {
+  h1 {
+    text-align: center;
+    span.majorLine {
+      font-weight: 500;
+    }
+    span.minorLine {
+      font-size: .8em;
+    }
+  }
+
+}

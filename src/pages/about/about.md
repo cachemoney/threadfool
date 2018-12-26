@@ -2,6 +2,7 @@
 contentType: about
 path: /about
 title: About Me
+hidden: false
 ---
 This is a placeholder page.
 

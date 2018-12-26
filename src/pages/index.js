@@ -3,11 +3,13 @@ import { Container, Card, CardText, CardBody, CardTitle, CardSubtitle } from 're
 import Link from 'gatsby-link'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
+import TagLine from '../components/text/tagLine'
 
 const IndexPage = ({ data }) => {
   const posts = data.allMarkdownRemark.edges.filter(post => !post.node.frontmatter.hidden && post.node.frontmatter.contentType === 'blog')
   return (
     <Layout>
+      <Container><TagLine /></Container>
       <Container>
         {posts.map(({ node: post }) => (
           <Card style={{marginBottom: 10}} key={post.id}>

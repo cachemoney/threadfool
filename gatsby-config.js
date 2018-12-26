@@ -3,6 +3,8 @@ module.exports = {
     title: 'Threadfool',
     author: 'robin paul',
     authorLink: 'https://github.com/cachemoney',
+    blogRepo: 'https://github.com/cachemoney/threadfool',
+    linkedIn: '#',
     disqus: 'gatsby-starter-blog'// put your disqus ID here
   },
   plugins: [

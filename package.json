@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-bootstrap-netlify",
+  "name": "threadfool-blog",
   "description": "Example Gatsby, Bootstrap, and Netlify CMS project",
   "version": "1.0.0",
-  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "author": "Robin Paul <>",
   "dependencies": {
     "bootstrap": "^4.1.3",
     "bootswatch": "4.*",

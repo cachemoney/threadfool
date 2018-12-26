@@ -54,19 +54,16 @@ export default function Template ({ data }) {
 }
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+  query BlogPostByPath($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
         path
         date(formatString: "MMMM DD, YYYY")
         title
-        attachments {
-          filename
-        }
-        related {
-          post
-        }
+      }
+      fields {
+        slug
       }
     }
 
