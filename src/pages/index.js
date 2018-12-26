@@ -1,45 +1,53 @@
-import React from 'react'
-import { Container, Card, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
+import React from "react"
+import { graphql } from "gatsby"
 import Link from 'gatsby-link'
-import { graphql } from 'gatsby'
+import { Container, Card, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
 import Layout from '../components/layout'
 import TagLine from '../components/text/tagLine'
+import PostLink from "../components/post-link"
 
-const IndexPage = ({ data }) => {
-  const posts = data.allMarkdownRemark.edges.filter(post => !post.node.frontmatter.hidden && post.node.frontmatter.contentType === 'blog')
+const IndexPage = ({
+  data: {
+    allMarkdownRemark: { edges },
+  },
+}) => {
+  const Posts = edges
+    .filter(edge => !edge.node.frontmatter.hidden) // You can filter your posts based on some criteria
+    .map(edge => <PostLink key={edge.node.id} post={edge.node} />)
+
+  // return <div>{Posts}</div>
   return (
     <Layout>
       <Container><TagLine /></Container>
       <Container>
-        {posts.map(({ node: post }) => (
-          <Card style={{marginBottom: 10}} key={post.id}>
-            <CardBody>
-              <CardTitle><Link to={post.frontmatter.path}>{post.frontmatter.title}</Link></CardTitle>
-              <CardSubtitle style={{marginBottom: 10}}>{post.frontmatter.date}</CardSubtitle>
-              <CardText>{post.excerpt}</CardText>
-            </CardBody>
-          </Card>
-        ))}
+        <Card style={{marginBottom: 10}}>
+          <CardBody>
+            {Posts}
+          </CardBody>
+        </Card>
       </Container>
     </Layout>
   )
+
 }
 
 export default IndexPage
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
-          excerpt(pruneLength: 400)
           id
+          excerpt(pruneLength: 250)
           frontmatter {
-            title
-            contentType
             date(formatString: "MMMM DD, YYYY")
             path
+            title
             hidden
+          }
+          fields {
+            slug
           }
         }
       }
