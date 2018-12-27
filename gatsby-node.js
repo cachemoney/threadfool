@@ -1,5 +1,6 @@
 const path = require('path')
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const _ = require('lodash')
 
 exports.createPages = ({ actions: { createPage }, graphql }) => {
   return graphql(`
@@ -38,12 +39,23 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark` || node.internal.type === `JupyterNotebook`) {
     const fileNode = getNode(node.parent)
-    // console.log(`\n`, fileNode.relativePath)
+    // console.log(`\n`, fileNode.relativeDirectory)
+    const [pages, category, subCategory] = fileNode.relativeDirectory.split('/')
     const slug = createFilePath({ node, getNode, basePath: `pages` })
     createNodeField({
       node,
       name: `slug`,
-      value: slug,
+      value: slug
+    })
+    createNodeField({
+      node,
+      name: `category`,
+      value: category
+    })
+    createNodeField({
+      node,
+      name: `subCategory`,
+      value: subCategory
     })
   }
 }
