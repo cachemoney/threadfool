@@ -35,9 +35,11 @@ const TemplateWrapper = ({ children, data }) => {
           </Container>
         </div>
         <div className='pageContent'>{children}</div>
-        <h5 className="text-center">
-          This project contains {data.allMarkdownRemark.totalCount} pages and is available on <a href={data.site.siteMetadata.blogRepo}>GitHub</a>. Copyright © {data.site.siteMetadata.author}, {currentYear}.
-        </h5>
+        <div className="text-center footer">
+          <h5>
+            This project contains {data.allMarkdownRemark.totalCount} pages and is available on <a href={data.site.siteMetadata.blogRepo}>GitHub</a>. Copyright © {data.site.siteMetadata.author}, {currentYear}.
+          </h5>
+        </div>
       </div>
     )} />
   )

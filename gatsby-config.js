@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Threadfool',
-    author: 'robin paul',
+    author: 'Robin Paul',
     authorLink: 'https://github.com/cachemoney',
     blogRepo: 'https://github.com/cachemoney/threadfool',
     linkedIn: '#',
