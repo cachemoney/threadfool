@@ -1,30 +1,69 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Link from 'gatsby-link'
-import { Container, Card, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
+// import Link from 'gatsby'
+import _ from 'lodash'
+import { Container, Card } from 'reactstrap'
 import Layout from '../components/layout'
 import TagLine from '../components/text/tagLine'
-import PostLink from "../components/post-link"
+// import { node } from "prop-types";
+// import PostLink from "../components/post-link"
+import SubCategoryCard from "../components/sub-category-card"
 
 const IndexPage = ({
   data: {
-    allMarkdownRemark: { edges },
+    allMarkdownRemark: { categories },
   },
 }) => {
-  const Posts = edges
-    .filter(edge => !edge.node.frontmatter.hidden) // You can filter your posts based on some criteria
-    .map(edge => <PostLink key={edge.node.id} post={edge.node} />)
 
-  // return <div>{Posts}</div>
+  function articleObjBuilder(node) {
+    return {
+      title: node.frontmatter.title,
+      slug: node.fields.slug
+    }
+  }
+
+  function populateSubs(cat) {
+    let articleItems = [], subCatName, objIndex
+    cat.edges.forEach( ({node}) => {
+      subCatName = node.fields.subCategory || "undefined"
+      objIndex = articleItems.findIndex( obj => obj.name === subCatName )
+      if (objIndex >= 0) {
+        articleItems[objIndex].articles.push(articleObjBuilder(node))
+      } else {
+        // subArticleItems = [] // initialize the array since its the 1st time
+        articleItems.push({name: subCatName, articles: [articleObjBuilder(node)]})
+      }
+    })
+
+    return articleItems
+  }
+
+  const transformedGraph = categories.map(category => (
+    {
+      name: category.fieldValue,
+      subCategory: populateSubs(category)
+    }))
+  console.log('transformedGraph: ', transformedGraph)
+
+  // [
+  //   {
+  //     name: "patterns",
+  //     subCategory: [{name: "creational", articles: [{title: "Abstract Factory Pattern", slug:"/patterns/creational/abstract-factory/"}]},{name: "structural", articles: []},{name: "behavioral"}]
+  //   }
+  // ]
+
   return (
     <Layout>
       <Container><TagLine /></Container>
       <Container>
-        <Card style={{marginBottom: 10}}>
-          <CardBody>
-            {Posts}
-          </CardBody>
-        </Card>
+        {transformedGraph.map(category => (
+          <div key={category.name}>
+            <Card style={{marginBottom: 20}} id={category.name}>
+              <h4 className="card-header" style={{fontWeight: 700}}>{_.startCase(category.name)}</h4>
+            </Card>
+             <SubCategoryCard subcategories={category.subCategory}/>
+          </div>
+        ))}
       </Container>
     </Layout>
   )
@@ -35,23 +74,12 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-      edges {
-        node {
-          id
-          excerpt(pruneLength: 250)
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            path
-            title
-            hidden
-          }
-          fields {
-            slug
-            category
-          }
-        }
-      }
-    }
+  allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+      categories: group(field: fields___category) {
+        fieldValue
+        totalCount
+    	edges {node {frontmatter{title}fields {slug subCategory }}}
+    	}
   }
+}
 `
