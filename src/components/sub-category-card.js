@@ -14,12 +14,12 @@ import { Card, CardBody, CardTitle, CardHeader } from 'reactstrap'
 const SubCategoryCard = ({subcategories}) => (
   <div>
     {subcategories.map(item => (
-      <Card style={{marginBottom: 20, flexDirection: "column"}}>
+      <Card style={{marginBottom: 20, flexDirection: "column"}} key={item.name}>
         <CardHeader tag="h5" style={{backgroundColor: "#fff", fontWeight: "normal"}}>{_.startCase(item.name)}</CardHeader>
         <CardBody>
           <ul style={{columns:2, WebkitColumns: 2, MozColumns: 2}}>
             {item.articles.map(article => (
-              <li>
+              <li key={article.slug}>
                 <Link to={article.slug}>{article.title}</Link>
               </li>
             ))}

@@ -1,16 +1,17 @@
 import React from "react"
 import { graphql } from "gatsby"
-// import Link from 'gatsby'
 import _ from 'lodash'
 import { Container, Card } from 'reactstrap'
 import Layout from '../components/layout'
-import TagLine from '../components/text/tagLine'
-// import { node } from "prop-types";
-// import PostLink from "../components/post-link"
+import SEO from '../components/seo'
+import TagLine from '../components/text/tag-line'
 import SubCategoryCard from "../components/sub-category-card"
+
+// NOTE: Set frontmatter date to null to not publish the note
 
 const IndexPage = ({
   data: {
+    site: { siteMetadata },
     allMarkdownRemark: { categories },
   },
 }) => {
@@ -43,7 +44,7 @@ const IndexPage = ({
       name: category.fieldValue,
       subCategory: populateSubs(category)
     }))
-  console.log('transformedGraph: ', transformedGraph)
+  // console.log('transformedGraph: ', transformedGraph)
 
   // [
   //   {
@@ -54,6 +55,11 @@ const IndexPage = ({
 
   return (
     <Layout>
+      <SEO
+        title="Robin Paul · Notes on Software Design & Data Architecture"
+        keywords={[`design patterns`, `robin paul`, `Software design`, `software architecture`]}
+        description={siteMetadata.description}
+      />
       <Container><TagLine /></Container>
       <Container>
         {transformedGraph.map(category => (
@@ -74,12 +80,24 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-  allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-      categories: group(field: fields___category) {
-        fieldValue
-        totalCount
-    	edges {node {frontmatter{title}fields {slug subCategory }}}
-    	}
-  }
+    site {
+      siteMetadata {
+        title
+        description
+        author {
+          name
+        }
+      }
+    }
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: { frontmatter: { date: { ne: null } } }
+      ) {
+        categories: group(field: fields___category) {
+          fieldValue
+          totalCount
+        edges {node {frontmatter{title}fields {slug subCategory }}}
+        }
+    }
 }
 `

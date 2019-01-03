@@ -13,12 +13,10 @@ import 'prismjs/themes/prism-twilight.css'
 import './index.scss'
 
 const TemplateWrapper = ({ children, data }) => {
-  // let user
-  // if (typeof window !== 'undefined') {
-  //   user = window.netlifyIdentity && window.netlifyIdentity.currentUser()
-  // }
-  const currentYear = new Date().getFullYear();
-
+  let user
+  if (typeof window !== 'undefined') {
+    user = window.netlifyIdentity && window.netlifyIdentity.currentUser()
+  }
   return (
     <StaticQuery query={pageQuery} render={data => (
       <div className='App'>
@@ -28,6 +26,12 @@ const TemplateWrapper = ({ children, data }) => {
             <Link to='/' className='navbar-brand'>{data.site.siteMetadata.title}</Link>
             <ul className='nav navbar-nav'>
 
+              {user && (
+                <li className='nav-item'>
+                  <a href='/admin' className='nav-link'>Admin</a>
+                </li>
+              )}
+
               <li className='nav-item'>
                 <Link to='/about' className='nav-link'>About</Link>
               </li>
@@ -35,18 +39,13 @@ const TemplateWrapper = ({ children, data }) => {
           </Container>
         </div>
         <div className='pageContent'>{children}</div>
-        <div className="text-center footer">
-          <h5>
-            This project contains {data.allMarkdownRemark.totalCount} pages and is available on <a href={data.site.siteMetadata.blogRepo}>GitHub</a>. Copyright © {data.site.siteMetadata.author}, {currentYear}.
-          </h5>
-        </div>
       </div>
     )} />
   )
 }
 
 TemplateWrapper.propTypes = {
-  children: PropTypes.array
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 }
 
 const pageQuery = graphql`
@@ -54,12 +53,10 @@ const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        blogRepo
-        author
+        author {
+          name
+        }
       }
-    }
-    allMarkdownRemark {
-      totalCount
     }
   }
 `
