@@ -8,7 +8,7 @@ module.exports = {
     `,
     authorLink: 'https://github.com/cachemoney',
     blogRepo: 'https://github.com/cachemoney/threadfool',
-    canonicalUrl: 'https://threafool.com',
+    canonicalUrl: 'https://threadfool.com',
     image: '',
     author: {
       name: 'Robin Paul',

@@ -39,7 +39,7 @@
 // @import "bootstrap/scss/forms";
 @import "bootstrap/scss/buttons";
 // @import "bootstrap/scss/transitions";
-// @import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/dropdown";
 // @import "bootstrap/scss/button-group";
 // @import "bootstrap/scss/input-group";
 // @import "bootstrap/scss/custom-forms";
@@ -130,5 +130,12 @@ div.homePage {
     a {
       text-decoration: none;
     }
+  }
+}
+
+div.dropdown-menu.dropdown-menu-right.show {
+  a, a:hover {
+    color: #373a3c;
+    text-decoration: none;
   }
 }
