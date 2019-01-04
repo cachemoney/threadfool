@@ -8,7 +8,7 @@ module.exports = {
     `,
     authorLink: 'https://github.com/cachemoney',
     blogRepo: 'https://github.com/cachemoney/threadfool',
-    canonicalUrl: 'https://threadfool.com',
+    siteUrl: 'https://threadfool.com',
     image: '',
     author: {
       name: 'Robin Paul',
@@ -76,8 +76,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Threadfool`,
+        short_name: `Threadfool`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,

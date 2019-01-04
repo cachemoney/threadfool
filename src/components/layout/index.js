@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-import NavBar2 from '../shared/nav-bar2'
+import NavBar from '../shared/nav-bar'
 
 // code syntax-highlighting theme
 // feel free to change it to another one
@@ -17,7 +17,7 @@ const TemplateWrapper = ({ children, data }) => {
   return (
     <StaticQuery query={pageQuery} render={data => (
       <div className='App'>
-        <NavBar2/>
+        <NavBar/>
         <div className='pageContent'>{children}</div>
       </div>
     )} />
