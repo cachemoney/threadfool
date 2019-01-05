@@ -13,7 +13,7 @@ import { Container,  Collapse,
   DropdownMenu,
   DropdownItem} from 'reactstrap';
 
-class NavBar extends React.Component {
+class HeaderNavBar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -121,7 +121,7 @@ export default () => (
       }
     `}
     render={(data) => (
-      <NavBar data={data} />
+      <HeaderNavBar data={data} />
     )}
   />
 )
