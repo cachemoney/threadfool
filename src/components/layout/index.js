@@ -7,7 +7,7 @@ import HeaderNavBar from '../shared/header-nav-bar'
 
 // code syntax-highlighting theme
 // feel free to change it to another one
-import 'prismjs/themes/prism-coy.css'
+import 'prismjs/themes/prism.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // main site style
